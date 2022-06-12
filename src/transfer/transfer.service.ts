@@ -4,13 +4,14 @@ import { Concurrency, QueueTask, Transaction, TransferStatusTypes, Wallet, Walle
 import { transactions, wallets } from '../../database';
 import fastq from 'fastq';
 import type { queueAsPromised } from 'fastq';
+import IResponse from '@/@universal/interfaces/response.interface';
 
 class TransferService extends UniversalService {
   constructor() {
     super();
   }
 
-  public bulkTransfer = async (body: TransferDetailsDto) => {
+  public bulkTransfer = async (body: TransferDetailsDto): Promise<IResponse<any, string>> => {
     const transferDetails = body.transferDetails;
     const invalidAccounts: Partial<TransferDto>[] = await this.accountLookup(transferDetails);
     if (invalidAccounts.length > 0) {
@@ -116,7 +117,12 @@ class TransferService extends UniversalService {
         }
       }
     } catch (error) {
-      // await transactionsDb.update({ _id: transfer._id }, { status: TransferStatusTypes.Failed });
+      for (const txn of transactions) {
+        if (txn.id === transfer.id) {
+          txn.status = TransferStatusTypes.Failed;
+          break;
+        }
+      }
     }
   };
 }

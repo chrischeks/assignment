@@ -1,7 +1,4 @@
 import IResponse from '@/@universal/interfaces/response.interface';
-import config from 'config';
-
-const { username, password, SMS_TOKEN } = config;
 
 class UniversalService {
   public successResponse = (message = 'success', data = null): IResponse<any, string> => {

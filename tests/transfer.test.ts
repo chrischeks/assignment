@@ -27,16 +27,22 @@ describe('TransferController (e2e)', () => {
 
     it('should not allow more than 10 bulk transfers', async () => {
       const { body, status } = await request(app).post('/transfers').send(moreThan10Recipients);
+
       expect(status).toBe(400);
       expect(body.status).toBe(false);
-      expect(body.message).toBe('transferDetails must contain not more than 10 elements');
+      expect(body.message).toBe('Validation Error');
+      expect(body.data[0].field).toBe('transferDetails');
+      expect(body.data[0].validations[0]).toBe('transferDetails must contain not more than 10 elements');
     });
 
-    it('should allow atleast one transfer', async () => {
+    it('should not allow transferDetails to be an empty array', async () => {
       const { body, status } = await request(app).post('/transfers').send({ transferDetails: [] });
+
       expect(status).toBe(400);
       expect(body.status).toBe(false);
-      expect(body.message).toBe('transferDetails must contain at least 1 elements');
+      expect(body.message).toBe('Validation Error');
+      expect(body.data[0].field).toBe('transferDetails');
+      expect(body.data[0].validations[0]).toBe('transferDetails must contain at least 1 elements');
     });
 
     it('should return a validation error message if amount is missing', async () => {
@@ -45,27 +51,39 @@ describe('TransferController (e2e)', () => {
       };
 
       const { body, status } = await request(app).post('/transfers').send(userData);
+
       expect(status).toBe(400);
       expect(body.status).toBe(false);
-      expect(body.message).toBe('amount must not be less than 100,amount should not be empty');
+      expect(body.message).toBe('Validation Error');
+      expect(body.data[0].field).toContain('amount');
+      expect(body.data[0].validations).toContain('amount must not be less than 100');
+      expect(body.data[0].validations).toContain('amount should not be empty');
     });
 
     it('should return a validation error message if phoneNumber is missing', async () => {
       const userData = { transferDetails: [{ amount: 100, accountNumber: '0000000293' }] };
 
       const { body, status } = await request(app).post('/transfers').send(userData);
+
       expect(status).toBe(400);
       expect(body.status).toBe(false);
-      expect(body.message).toBe('phoneNumber must be a valid phone number,phoneNumber should not be empty');
+      expect(body.message).toBe('Validation Error');
+      expect(body.data[0].field).toContain('phoneNumber');
+      expect(body.data[0].validations).toContain('phoneNumber must be a valid phone number');
+      expect(body.data[0].validations).toContain('phoneNumber should not be empty');
     });
 
     it('should return a validation error message if accountNumber is missing', async () => {
       const userData = { transferDetails: [{ amount: 100, phoneNumber: '+2348080000293' }] };
 
       const { body, status } = await request(app).post('/transfers').send(userData);
+
       expect(status).toBe(400);
       expect(body.status).toBe(false);
-      expect(body.message).toBe('accountNumber must be a string,accountNumber should not be empty');
+      expect(body.message).toBe('Validation Error');
+      expect(body.data[0].field).toContain('accountNumber');
+      expect(body.data[0].validations).toContain('accountNumber must be a string');
+      expect(body.data[0].validations).toContain('accountNumber should not be empty');
     });
 
     it('should make bulk transfer to wallet accounts', async () => {
@@ -73,6 +91,7 @@ describe('TransferController (e2e)', () => {
       // const mockServiceInstance = transferService.queueWorker();
 
       const { body, status } = await request(app).post('/transfers').send(validTransferData);
+
       expect(status).toBe(200);
       expect(body.status).toBe(true);
       expect(body.message).toBe('Transfer(s) queued successfully');
@@ -82,6 +101,16 @@ describe('TransferController (e2e)', () => {
         const foundTransfer = transactions.find(x => txn.accountNumber === x.accountNumber && txn.phoneNumber === x.phoneNumber);
         expect(foundTransfer?.status).toBe(TransferStatusTypes.Success);
       }
+    });
+  });
+
+  describe('[POST] /transfer/not-found', () => {
+    it('should return an error message for invalid path', async () => {
+      const { body, status } = await request(app).post('/transfers/not-found');
+
+      expect(status).toBe(404);
+      expect(body.status).toBe(false);
+      expect(body.message).toBe('Route not found');
     });
   });
 });

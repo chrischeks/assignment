@@ -4,10 +4,11 @@
   "description": "A NodeJS for bulk transfer",
   "main": "src/server.ts",
   "scripts": {
-    "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
+    "start": "npm run build && cross-env NODE_ENV=production node dist/src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
-    "test": "jest --forceExit ",
-    "build": "rm -rf dist && tsc && npx tsc-alias"
+    "test": "jest --forceExit --coverage",
+    "test:watch": "jest --watch",
+    "build": "rm -rf dist && tsc && tsc-alias"
   },
   "repository": {
     "type": "git",
@@ -42,9 +43,7 @@
     "reflect-metadata": "^0.1.13",
     "ts-node": "^9.1.1",
     "tslib": "^2.3.0",
-    "typescript": "^4.7.3",
-    "winston": "^3.3.3",
-    "winston-daily-rotate-file": "^4.5.5"
+    "typescript": "^4.7.3"
   },
   "devDependencies": {
     "@types/compression": "^1.7.0",
@@ -70,6 +69,7 @@
     "prettier": "^2.3.0",
     "supertest": "^6.2.3",
     "ts-jest": "^28.0.4",
+    "tsc-alias": "^1.6.9",
     "tsconfig-paths": "^3.9.0"
   }
 }
