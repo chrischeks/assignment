@@ -1,4 +1,4 @@
-import { Transaction, Wallet } from './src/transfer/transfer.types';
+import { Transaction, Wallet } from './transfer/transfer.types';
 
 export const transactions: Transaction[] = [];
 

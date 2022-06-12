@@ -3,8 +3,8 @@ import express from 'express';
 import request from 'supertest';
 import App from '../src/app';
 import TransferRoute from '../src/transfer/transfer.route';
-import { invalidAccountNumber, moreThan10Recipients, validTransferData } from './data/test-data';
-import { transactions } from '../database';
+import { invalidAccountNumber, recipients } from './data/test-data';
+import { transactions } from '../src/database';
 import { TransferStatusTypes } from '../src/transfer/transfer.types';
 // import transferService from '../src/transfer/transfer.service';
 
@@ -26,7 +26,7 @@ describe('TransferController (e2e)', () => {
     });
 
     it('should not allow more than 10 bulk transfers', async () => {
-      const { body, status } = await request(app).post('/transfers').send(moreThan10Recipients);
+      const { body, status } = await request(app).post('/transfers').send(recipients(11));
 
       expect(status).toBe(400);
       expect(body.status).toBe(false);
@@ -89,18 +89,17 @@ describe('TransferController (e2e)', () => {
     it('should make bulk transfer to wallet accounts', async () => {
       // console.log(mock.promise, 'fastq.promise');
       // const mockServiceInstance = transferService.queueWorker();
-
-      const { body, status } = await request(app).post('/transfers').send(validTransferData);
+      const userData = recipients(1);
+      const { body, status } = await request(app).post('/transfers').send(userData);
 
       expect(status).toBe(200);
       expect(body.status).toBe(true);
       expect(body.message).toBe('Transfer(s) queued successfully');
       expect(body.data).toBe(null);
 
-      for (const txn of validTransferData.transferDetails) {
-        const foundTransfer = transactions.find(x => txn.accountNumber === x.accountNumber && txn.phoneNumber === x.phoneNumber);
-        expect(foundTransfer?.status).toBe(TransferStatusTypes.Success);
-      }
+      const transfer = userData.transferDetails[0];
+      const foundTransfer = transactions.find(txn => transfer.accountNumber === txn.accountNumber && transfer.phoneNumber === txn.phoneNumber);
+      expect(foundTransfer?.status).toBe(TransferStatusTypes.Success);
     });
   });
 

@@ -4,11 +4,11 @@
   "description": "A NodeJS for bulk transfer",
   "main": "src/server.ts",
   "scripts": {
-    "start": "npm run build && cross-env NODE_ENV=production node dist/src/server.js",
+    "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
     "test": "jest --forceExit --coverage",
     "test:watch": "jest --watch",
-    "build": "rm -rf dist && tsc && tsc-alias"
+    "build": "rm -rf dist && tsc && npx tsc-alias"
   },
   "repository": {
     "type": "git",
@@ -18,7 +18,7 @@
     "transfers"
   ],
   "author": "Chekwube Udeogu",
-  "license": "ISC",
+  "license": "",
   "bugs": {
     "url": "https://github.com/chrischeks/assignment/issues"
   },
@@ -69,7 +69,6 @@
     "prettier": "^2.3.0",
     "supertest": "^6.2.3",
     "ts-jest": "^28.0.4",
-    "tsc-alias": "^1.6.9",
     "tsconfig-paths": "^3.9.0"
   }
 }

@@ -2,6 +2,7 @@
     "compileOnSave": false,
     "compilerOptions": {
         "target": "es2017",
+        "rootDirs":["tests", "src"],
         "lib": [
             "es2017",
             "esnext.asynciterable"

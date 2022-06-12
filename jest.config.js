@@ -4,7 +4,7 @@ const { compilerOptions } = require('./tsconfig.json');
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  roots: ['./tests'],
+  roots: ['<rootDir>/tests'],
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },

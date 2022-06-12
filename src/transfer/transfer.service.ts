@@ -1,7 +1,7 @@
 import UniversalService from '@/@universal/service/universal.service';
 import { TransferDetailsDto, TransferDto } from './transfer.dto';
 import { Concurrency, QueueTask, Transaction, TransferStatusTypes, Wallet, WalletBalanceCheck } from './transfer.types';
-import { transactions, wallets } from '../../database';
+import { transactions, wallets } from '../database';
 import fastq from 'fastq';
 import type { queueAsPromised } from 'fastq';
 import IResponse from '@/@universal/interfaces/response.interface';
