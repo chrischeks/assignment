@@ -1,0 +1,16 @@
+{
+"config":{
+    "env": "test",
+
+   "log": {
+        "format": "dev",
+        "dir": "../logs"
+    },
+    "cors": {
+        "origin": true,
+        "credentials": true
+    },
+   
+    "PORT":3000
+}
+}
