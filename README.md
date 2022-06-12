@@ -13,7 +13,7 @@
 ## USE
 
 - After running the application, you can send a POST request to (http://localhost:3000/transfers) using CURL, Postman, etc
-- In-memory wallets were created. Therefore, payloads has to match any of the wallets available
+- In-memory wallets were created. Therefore, request payload details have to match any of the wallets created
 - There's a sample payload in a root level file named .payload-example
 
 ## Project Clone
