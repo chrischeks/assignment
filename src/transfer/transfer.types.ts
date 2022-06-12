@@ -1,5 +1,5 @@
 export class Wallet {
-  _id: number;
+  id: number;
   userId: number;
   accountNumber: string;
   balance: number;

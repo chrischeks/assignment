@@ -13,6 +13,7 @@ class TransferService extends UniversalService {
 
   public bulkTransfer = async (body: TransferDetailsDto): Promise<IResponse<any, string>> => {
     const transferDetails = body.transferDetails;
+
     const invalidAccounts: Partial<TransferDto>[] = await this.accountLookup(transferDetails);
     if (invalidAccounts.length > 0) {
       return this.failureResponse('Invalid entry. Crosscheck the following account number(s) and phone number(s)', invalidAccounts);
@@ -30,12 +31,12 @@ class TransferService extends UniversalService {
   /**
    * Account owner's wallet is static (no debit) to allow uninterrupted calls to the /transfers endpoint.
    */
-  public checkWalletBalance = async (transfers: TransferDto[]): Promise<WalletBalanceCheck> => {
+  private checkWalletBalance = async (transfers: TransferDto[]): Promise<WalletBalanceCheck> => {
     const initialvalue = 0;
     const totalTransferAmount = transfers.reduce((previousValue, currentValue) => previousValue + currentValue.amount, initialvalue);
 
     const accountOwnerWallet: Wallet = {
-      _id: 100,
+      id: 100,
       userId: 100,
       accountNumber: '0000000100',
       balance: 100000000000,
@@ -46,7 +47,7 @@ class TransferService extends UniversalService {
     return { canTransfer: accountOwnerWallet.balance > totalTransferAmount, totalTransferAmount, walletBalance: accountOwnerWallet.balance };
   };
 
-  public accountLookup = async (transfers: TransferDto[]): Promise<Partial<TransferDto>[]> => {
+  private accountLookup = async (transfers: TransferDto[]): Promise<Partial<TransferDto>[]> => {
     //Check for invalid account number and phone number combination
     const invalidAccountNumbers: Partial<TransferDto>[] = [];
     for (const transfer of transfers) {
@@ -61,29 +62,23 @@ class TransferService extends UniversalService {
     return invalidAccountNumbers;
   };
 
-  public createTransfer = async (transfers: TransferDto[]) => {
-    try {
-      transfers.map(transfer => {
-        const record: Transaction = {
-          id: this.generateRandom(24),
-          amount: transfer.amount,
-          status: TransferStatusTypes.Pending,
-          accountNumber: transfer.accountNumber,
-          phoneNumber: transfer.phoneNumber,
-        };
-        return transactions.push(record);
-      });
+  private createTransfer = async (transfers: TransferDto[]): Promise<void> => {
+    transfers.map(transfer => {
+      const record: Transaction = {
+        id: this.generateRandom(24),
+        amount: transfer.amount,
+        status: TransferStatusTypes.Pending,
+        accountNumber: transfer.accountNumber,
+        phoneNumber: transfer.phoneNumber,
+      };
+      return transactions.push(record);
+    });
 
-      const queue: queueAsPromised<QueueTask> = fastq.promise(this.queueWorker, Concurrency);
+    const queue: queueAsPromised<QueueTask> = fastq.promise(this.queueWorker, Concurrency);
 
-      transactions.map((txn: Transaction) => {
-        queue.push({ transferId: txn.id });
-      });
-
-      return;
-    } catch (error) {
-      throw error;
-    }
+    transactions.map((txn: Transaction) => {
+      queue.push({ transferId: txn.id });
+    });
   };
 
   /**
