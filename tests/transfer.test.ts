@@ -6,9 +6,6 @@ import TransferRoute from '../src/transfer/transfer.route';
 import { invalidAccountNumber, recipients } from './data/test-data';
 import { transactions } from '../src/database';
 import { TransferStatusTypes } from '../src/transfer/transfer.types';
-// import transferService from '../src/transfer/transfer.service';
-
-// jest.mock('../src/transfer/transfer.service');
 
 describe('TransferController (e2e)', () => {
   let app: express.Application;
@@ -87,8 +84,6 @@ describe('TransferController (e2e)', () => {
     });
 
     it('should make bulk transfer to wallet accounts', async () => {
-      // console.log(mock.promise, 'fastq.promise');
-      // const mockServiceInstance = transferService.queueWorker();
       const userData = recipients(1);
       const { body, status } = await request(app).post('/transfers').send(userData);
 

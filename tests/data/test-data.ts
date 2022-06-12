@@ -4,68 +4,8 @@ export const invalidAccountNumber = {
   transferDetails: [
     {
       accountNumber: '0000000001j',
-      amount: 50000000000,
-      phoneNumber: '+2348123456780',
-    },
-  ],
-};
-
-export const moreThan11Recipients = {
-  transferDetails: [
-    {
-      accountNumber: '0000000009',
       amount: 5000,
-      phoneNumber: '+2348123456700',
-    },
-    {
-      accountNumber: '0000000009',
-      amount: 5000,
-      phoneNumber: '+2348123456700',
-    },
-    {
-      accountNumber: '0000000009',
-      amount: 5000,
-      phoneNumber: '+2348123456700',
-    },
-    {
-      accountNumber: '0000000009',
-      amount: 5000,
-      phoneNumber: '+2348123456700',
-    },
-    {
-      accountNumber: '0000000009',
-      amount: 5000,
-      phoneNumber: '+2348123456700',
-    },
-    {
-      accountNumber: '0000000009',
-      amount: 5000,
-      phoneNumber: '+2348123456700',
-    },
-    {
-      accountNumber: '0000000009',
-      amount: 5000,
-      phoneNumber: '+2348123456700',
-    },
-    {
-      accountNumber: '0000000009',
-      amount: 5000,
-      phoneNumber: '+2348123456700',
-    },
-    {
-      accountNumber: '0000000009',
-      amount: 5000,
-      phoneNumber: '+2348123456700',
-    },
-    {
-      accountNumber: '0000000009',
-      amount: 5000,
-      phoneNumber: '+2348123456700',
-    },
-    {
-      accountNumber: '0000000009',
-      amount: 5000,
-      phoneNumber: '+2348123456700',
+      phoneNumber: '+2348081111115',
     },
   ],
 };
@@ -73,9 +13,9 @@ export const moreThan11Recipients = {
 export const recipients = (num: number) => {
   const moreThan10Recipients: TransferDto[] = [];
   const data = {
-    accountNumber: '0000000001',
-    amount: 50000000000,
-    phoneNumber: '+2348123456780',
+    accountNumber: '0000000004',
+    amount: 5000,
+    phoneNumber: '+2348081111115',
   };
 
   for (let i = 1; i <= num; i++) {

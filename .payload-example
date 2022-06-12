@@ -1,0 +1,55 @@
+{
+    "transferDetails": [
+     
+        {
+            "accountNumber": "0000000003",
+            "amount": 300,
+            "phoneNumber": "+2348081111113"
+        },
+        {
+            "accountNumber": "0000000004",
+            "amount": 400,
+            "phoneNumber": "+2348081111115"
+        },
+        {
+            "accountNumber": "0000000005",
+            "amount": 500,
+            "phoneNumber": "+2348081111115"
+        },
+        {
+            "accountNumber": "0000000006",
+            "amount": 600,
+            "phoneNumber": "+2348081111116"
+        },
+        {
+            "accountNumber": "0000000007",
+            "amount": 700,
+            "phoneNumber": "+2348081111117"
+        },
+        {
+            "accountNumber": "0000000008",
+            "amount": 800,
+            "phoneNumber": "+2348081111118"
+        },
+        {
+            "accountNumber": "0000000009",
+            "amount": 900,
+            "phoneNumber": "+2348081111119"
+        },
+        {
+            "accountNumber": "0000000010",
+            "amount": 1000,
+            "phoneNumber": "+2348081111120"
+        },
+        {
+            "accountNumber": "0000000011",
+            "amount": 1000,
+            "phoneNumber": "+2348081111121"
+        },
+        {
+            "accountNumber": "0000000012",
+            "amount": 1000,
+            "phoneNumber": "+2348081111122"
+        }
+    ]
+}
