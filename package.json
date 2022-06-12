@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chrischeks/......."
+    "url": "git+https://github.com/chrischeks/assignment.git"
   },
   "keywords": [
     "transfers"
@@ -19,9 +19,9 @@
   "author": "Chekwube Udeogu",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/chrischeks/account-management/...."
+    "url": "https://github.com/chrischeks/assignment/issues"
   },
-  "homepage": "https://github.com/chrischeks/.....#readme",
+  "homepage": "https://github.com/chrischeks/assignment#readme",
   "dependencies": {
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
