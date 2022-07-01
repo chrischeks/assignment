@@ -22,14 +22,13 @@ jobs:
           name: 'Install packages'
           command: npm install
       - save_cache:
-          key: "npm-packages"
+          key: 'npm-packages'
           paths:
             - /src/node_modules
 
       - run:
           name: 'Build app'
           command: npm run build
-
 
   test:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
@@ -41,14 +40,14 @@ jobs:
     steps:
       - checkout
 
-      -- restore_cache:
-          key: "npm-packages"
+      - restore_cache:
+          key: 'npm-packages'
           paths:
             - /src/node_modules
       - run:
           name: 'install packages (not necessary)'
           command: npm install
-        
+
       - run: npm run test
 
   analyse:
@@ -59,9 +58,7 @@ jobs:
     steps:
       - checkout
       - run: npm audit
-          
 
-  
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
